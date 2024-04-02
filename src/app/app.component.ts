@@ -23,6 +23,8 @@ export class AppComponent implements OnInit{
         const latitude = coords.latitude;
         const longitude = coords.longitude;
         this.coordinatesService.setCoordinates(latitude, longitude);
+        console.log(latitude);
+        console.log(longitude);
       })
       .catch(error => console.error(error));
   }

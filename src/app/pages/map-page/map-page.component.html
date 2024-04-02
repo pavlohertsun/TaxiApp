@@ -1,3 +1,13 @@
 <google-map [center]="center" [zoom]="zoom">
-  <map-marker [position]="center"></map-marker>
+<!--  <map-marker [position]="center"></map-marker>-->
+<!--  <map-marker [position]="{lat: 49.8348838, lng: 24.0085637}"></map-marker>-->
+<!--  <map-polyline [path]="vertices"></map-polyline>-->
+  @if (directionsResults$ | async; as directionsResults) {
+    <map-directions-renderer [directions]="directionsResults" />
+  }
 </google-map>
+
+<input type="text" [(ngModel)]="address">
+<button type="submit" (click)="search()">
+  search
+</button>
