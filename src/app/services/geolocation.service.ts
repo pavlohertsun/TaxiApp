@@ -10,8 +10,13 @@ export class GeolocationService {
     return new Promise((resolve, reject) => {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
-          position => resolve(position.coords),
-          error => reject(error)
+          position => {
+            resolve(position.coords)
+            console.log(position)
+          },
+          error => {
+            reject(error);
+          }
         );
       } else {
         reject(new Error('Геолокація не підтримується в цьому браузері'));

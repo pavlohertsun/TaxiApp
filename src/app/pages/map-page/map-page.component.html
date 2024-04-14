@@ -1,13 +1,38 @@
-<google-map [center]="center" [zoom]="zoom">
-<!--  <map-marker [position]="center"></map-marker>-->
-<!--  <map-marker [position]="{lat: 49.8348838, lng: 24.0085637}"></map-marker>-->
-<!--  <map-polyline [path]="vertices"></map-polyline>-->
-  @if (directionsResults$ | async; as directionsResults) {
-    <map-directions-renderer [directions]="directionsResults" />
-  }
-</google-map>
+<app-navbar></app-navbar>
 
-<input type="text" [(ngModel)]="address">
-<button type="submit" (click)="search()">
-  search
-</button>
+<div class="map-container">
+  <google-map [center]="center" [zoom]="zoom" width="96%">
+    @if (directionsResults$ | async;as directionsResults) {
+      <map-directions-renderer [directions]="directionsResults"/>
+    }
+  </google-map>
+</div>
+<div class="outside-container">
+  <div class="left-container">
+    <div class="search-container">
+      <input type="text" [(ngModel)]="destinationAddress">
+      <button type="submit" (click)="search()">
+        Search
+      </button>
+    </div>
+    <div class="addresses_container">
+      <div *ngIf="addresses">
+        <ng-container *ngFor="let address of addresses">
+          <app-address-container [address]="address" (idClicked)="handleIdClicked($event)"></app-address-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="right-container">
+    <div *ngIf="price != 0" class="price-container">
+      <p>
+        Economy:    {{ price | currency: "UAH "}}
+      </p>
+    </div>
+    <div class="button-container">
+      <button (click)="orderTaxi()">
+        Order
+      </button>
+    </div>
+  </div>
+</div>
