@@ -1,5 +1,4 @@
 <app-navbar></app-navbar>
-
 <div class="map-container">
   <google-map [center]="center" [zoom]="zoom" width="96%">
     @if (directionsResults$ | async;as directionsResults) {
@@ -7,32 +6,63 @@
     }
   </google-map>
 </div>
-<div class="outside-container">
-  <div class="left-container">
-    <div class="search-container">
-      <input type="text" [(ngModel)]="destinationAddress">
-      <button type="submit" (click)="search()">
-        Search
-      </button>
+<div *ngIf="!searchingForDriver">
+  <div class="outside-container">
+    <div class="left-container">
+      <div class="search-container">
+        <input type="text" [(ngModel)]="destinationAddress">
+        <button type="submit" (click)="search()">
+          Search
+        </button>
+      </div>
+      <div class="addresses_container">
+        <div *ngIf="addresses">
+          <ng-container *ngFor="let address of addresses">
+            <app-address-container [address]="address" (idClicked)="handleIdClicked($event)"></app-address-container>
+          </ng-container>
+        </div>
+      </div>
     </div>
-    <div class="addresses_container">
-      <div *ngIf="addresses">
-        <ng-container *ngFor="let address of addresses">
-          <app-address-container [address]="address" (idClicked)="handleIdClicked($event)"></app-address-container>
-        </ng-container>
+    <div class="right-container">
+      <div *ngIf="price != 0" class="price-container">
+        <p>
+          Economy:    {{ price | currency: "UAH " }}
+        </p>
+      </div>
+      <div class="button-container">
+        <button (click)="orderTaxi()">
+          Order
+        </button>
       </div>
     </div>
   </div>
-  <div class="right-container">
-    <div *ngIf="price != 0" class="price-container">
-      <p>
-        Economy:    {{ price | currency: "UAH "}}
-      </p>
-    </div>
-    <div class="button-container">
-      <button (click)="orderTaxi()">
-        Order
-      </button>
-    </div>
+</div>
+
+<div *ngIf="searchingForDriver">
+  <div class="waiting-container" *ngIf="!foundDriver">
+    <h1>Searching for driver</h1>
+      <div class="newtons-cradle">
+        <div class="newtons-cradle__dot"></div>
+        <div class="newtons-cradle__dot"></div>
+        <div class="newtons-cradle__dot"></div>
+        <div class="newtons-cradle__dot"></div>
+      </div>
+  </div>
+  <div *ngIf="foundDriver" class="order-container">
+    <p>
+      From: {{startAddress}}
+    </p>
+    <p>
+      To: {{destinationAddress}}
+    </p>
+    <p>
+      Your driver: {{ driver.name }} {{ driver.surname }}
+    </p>
+    <p>
+      Car number:
+    </p>
+    <button class="cancel-order-button">
+      Cancel order
+    </button>
   </div>
 </div>

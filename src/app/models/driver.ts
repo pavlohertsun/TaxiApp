@@ -1,11 +1,11 @@
 import {ITrip} from "./trip";
 
-export interface ICustomer {
+export interface IDriver{
   id: number,
   name: string,
   surname: string,
   email: string,
   phoneNumber: string,
   rating: number,
-  trips: Set<ITrip>
+  trips: ITrip[]
 }

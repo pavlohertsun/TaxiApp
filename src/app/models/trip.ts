@@ -1,6 +1,8 @@
 import {ICustomer} from "./customer";
+import {IDriver} from "./driver";
 
 export interface ITrip{
+  id: number,
   startTime: string,
   endTime: string,
   startPoint: string,
@@ -9,5 +11,6 @@ export interface ITrip{
   status: string,
   rate: string
   description: string,
-  user:ICustomer;
+  user:ICustomer,
+  driver: IDriver
 }

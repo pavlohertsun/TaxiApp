@@ -54,6 +54,14 @@ export class MapPageComponent implements OnInit{
 
   price: number = 0;
   startAddress: string = '';
+
+  searchingForDriver = false;
+  foundDriver = false;
+
+  driver!: {
+    name: string,
+    surname: string
+  };
   constructor(private mapDirectionsService: MapDirectionsService, private placesService: PlacesService,
               private converterService: ConvertToAddressService, private pricingService: PricingService,
               private geolocationService: GeolocationService, private websocketService: WebsocketService) { }
@@ -142,7 +150,7 @@ export class MapPageComponent implements OnInit{
     });
   }
   orderTaxi(){
-    this.websocketService.sendMessage({
+    this.websocketService.createTrip({
       startTime: this.getCurrentTimestamp(),
       startPoint: this.startAddress,
       endPoint: this.destinationAddress,
@@ -151,6 +159,18 @@ export class MapPageComponent implements OnInit{
       rate: 'Low',
       description: ' - ',
       customerId: localStorage.getItem('userId')
+    });
+
+    this.searchingForDriver = true;
+
+    this.websocketService.subscribeForCustomer((response) => {
+      const driverJson: any = JSON.parse(response.body);
+
+      console.log(driverJson);
+
+      this.searchingForDriver = true;
+      this.foundDriver = true;
+      this.driver = driverJson;
     });
   }
   getCurrentTimestamp(): string{
