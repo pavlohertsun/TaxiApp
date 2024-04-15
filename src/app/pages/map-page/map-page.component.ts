@@ -18,6 +18,7 @@ import {NavbarComponent} from "../../components/navbar/navbar.component";
 import {PricingService} from "../../services/pricing.service";
 import {GeolocationService} from "../../services/geolocation.service";
 import {WebsocketService} from "../../services/websocket.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-map-page',
@@ -60,11 +61,16 @@ export class MapPageComponent implements OnInit{
 
   driver!: {
     name: string,
-    surname: string
+    surname: string,
+    arrived: boolean,
+    ended: boolean
   };
+
+  tripId!: number;
   constructor(private mapDirectionsService: MapDirectionsService, private placesService: PlacesService,
               private converterService: ConvertToAddressService, private pricingService: PricingService,
-              private geolocationService: GeolocationService, private websocketService: WebsocketService) { }
+              private geolocationService: GeolocationService, private websocketService: WebsocketService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.geolocationService.getCurrentPosition()
@@ -151,37 +157,54 @@ export class MapPageComponent implements OnInit{
   }
   orderTaxi(){
     this.websocketService.createTrip({
-      startTime: this.getCurrentTimestamp(),
       startPoint: this.startAddress,
       endPoint: this.destinationAddress,
       price: this.price,
-      status: 'In progress',
+      status: 'Created',
       rate: 'Low',
       description: ' - ',
       customerId: localStorage.getItem('userId')
     });
+    this.getTripId();
+
+    this.websocketService.subscribeForCancelling((response) =>{
+      this.searchingForDriver = false;
+      this.foundDriver = false;
+      this.websocketService.disconnect();
+      this.router.navigate(['/']).then(r => ['/']);
+    })
 
     this.searchingForDriver = true;
 
     this.websocketService.subscribeForCustomer((response) => {
-      const driverJson: any = JSON.parse(response.body);
+        const driverJson: any = JSON.parse(response.body);
 
-      console.log(driverJson);
+        console.log(driverJson);
 
-      this.searchingForDriver = true;
-      this.foundDriver = true;
-      this.driver = driverJson;
+        this.searchingForDriver = true;
+        this.foundDriver = true;
+        this.driver = driverJson;
+
+        if(this.driver.ended){
+          this.searchingForDriver = false;
+          this.foundDriver = false;
+          this.websocketService.disconnect();
+          this.router.navigate(['/']).then(r => ['/']);
+        }
     });
   }
-  getCurrentTimestamp(): string{
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-    const day = ('0' + currentDate.getDate()).slice(-2);
-    const hours = ('0' + currentDate.getHours()).slice(-2);
-    const minutes = ('0' + currentDate.getMinutes()).slice(-2);
-    const seconds = ('0' + currentDate.getSeconds()).slice(-2);
+  getTripId(){
+    this.websocketService.subscribeForDriver((response) => {
+      const tripJson: any = JSON.parse(response.body);
 
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+      this.tripId = tripJson.id;
+    });
+  }
+  cancelOrder(){
+    this.websocketService.cancelTrip(this.tripId);
+    this.searchingForDriver = false;
+    this.foundDriver = false;
+    this.websocketService.disconnect();
+    this.router.navigate(['/']).then(r => ['/']);
   }
 }

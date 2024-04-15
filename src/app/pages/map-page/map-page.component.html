@@ -56,12 +56,16 @@
       To: {{destinationAddress}}
     </p>
     <p>
-      Your driver: {{ driver.name }} {{ driver.surname }}
+      Your driver: {{ driver.name }}
+    </p>
+    <p>
+      Phone: {{ driver.surname }}
     </p>
     <p>
       Car number:
     </p>
-    <button class="cancel-order-button">
+    <h1 *ngIf="driver.arrived">Driver arrived!</h1>
+    <button class="cancel-order-button" (click)="cancelOrder()">
       Cancel order
     </button>
   </div>
