@@ -7,5 +7,6 @@ export interface ICustomer {
   email: string,
   phoneNumber: string,
   rating: number,
+  balance: number,
   trips: ICustomerTrip[]
 }

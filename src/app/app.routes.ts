@@ -6,6 +6,7 @@ import {MapPageComponent} from "./pages/map-page/map-page.component";
 import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 import {AuthGuard} from "./guards/auth.guard"
 import {DriverPageComponent} from "./pages/driver-page/driver-page.component";
+import {DriverProfilePageComponent} from "./pages/driver-profile-page/driver-profile-page.component";
 
 export const routes: Routes = [
   {path: "", component: MainPageComponent},
@@ -14,4 +15,5 @@ export const routes: Routes = [
   {path: "map", component: MapPageComponent, canActivate: [AuthGuard]},
   {path: "profile", component: ProfilePageComponent, canActivate: [AuthGuard]},
   {path: "driver", component: DriverPageComponent, canActivate: [AuthGuard]},
+  {path: "dprofile", component: DriverProfilePageComponent, canActivate: [AuthGuard]},
 ];

@@ -1,4 +1,5 @@
 import {ITrip} from "./trip";
+import {IDriverProfileTrip} from "./driver-profile-trip";
 
 export interface IDriver{
   id: number,
@@ -6,6 +7,7 @@ export interface IDriver{
   surname: string,
   email: string,
   phoneNumber: string,
-  rating: number,
-  trips: ITrip[]
+  balance: number,
+  license: boolean,
+  trips: IDriverProfileTrip[]
 }
