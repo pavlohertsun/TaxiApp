@@ -1,4 +1,4 @@
-import {ITrip} from "./trip";
+import {ICustomerTrip} from "./customer-trip";
 
 export interface ICustomer {
   id: number,
@@ -7,5 +7,5 @@ export interface ICustomer {
   email: string,
   phoneNumber: string,
   rating: number,
-  trips: Set<ITrip>
+  trips: ICustomerTrip[]
 }
