@@ -1,0 +1,58 @@
+<app-navbar>
+
+</app-navbar>
+<div *ngIf="!foundTrip">
+  <div class="headline-container">
+    <button class="active-driver-button"
+            (click)="activate()" [ngClass]="{'active' : driverActive}">
+      Active
+    </button>
+  </div>
+  <div>
+    <h1 class="headline">
+      Available trips:
+    </h1>
+    <p *ngIf="!trip" class="no-available-p">No available trips yet</p>
+    <div *ngIf="trip">
+      <ng-container *ngFor="let trip of trips">
+        <app-available-order [trip]="trip" (idClicked)="handleIdClicked($event)">
+
+        </app-available-order>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div *ngIf="foundTrip" class="outside-container">
+  <h1 class="order-headline">
+    Order:
+  </h1>
+  <div class="applied-trip-container" *ngIf="appliedTrip">
+    <p>
+      From: {{ appliedTrip.startPoint }}
+    </p>
+    <p>
+      To: {{ appliedTrip.endPoint }}
+    </p>
+    <p>
+      Price: {{ appliedTrip.price }}
+    </p>
+  </div>
+  <div class="applied-trip-container" *ngIf="appliedTrip">
+    <p>
+      Customer name: {{ appliedTrip.userName }}
+    </p>
+    <p>
+      Customer number: {{ appliedTrip.userPhone }}
+    </p>
+    <p>
+      Description:  {{ appliedTrip.description }}
+    </p>
+  </div>
+  <button class="arrived-button" (click)="driverArrived()"
+          [ngClass]="{'end-trip': buttonText === 'End trip'}">
+    {{ buttonText }}
+  </button>
+  <button class="cancel-order-button" (click)="cancelTrip()">
+    Cancel order
+  </button>
+</div>

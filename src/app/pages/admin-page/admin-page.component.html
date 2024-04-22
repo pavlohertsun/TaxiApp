@@ -1,0 +1,67 @@
+<app-navbar>
+
+</app-navbar>
+
+<div class="outside-container">
+  <div class="profile-headlines-container">
+    <button class="button-styles" (click)="setActiveButton('stat')"
+            [ngClass]="{ 'active-button': activeButton === 'stat' }">
+      Statistic
+    </button>
+    <button class="button-styles" (click)="setActiveButton('trans')"
+            [ngClass]="{ 'active-button': activeButton === 'trans' }">
+      Transactions
+    </button>
+    <button class="button-styles" (click)="setActiveButton('set')"
+            [ngClass]="{ 'active-button': activeButton === 'set' }">
+      System settings
+    </button>
+    <button (click)="signOut()" class="log-out-button">
+      Sign out
+    </button>
+  </div>
+
+  <div class="graphic-container" *ngIf="activeButton === 'stat' && expensesSum && incomesSum">
+    <app-statistic [incomes]="incomesSum" [expenses]="expensesSum">
+
+    </app-statistic>
+  </div>
+
+  <div class="transactions-container" *ngIf="activeButton === 'trans'">
+    <div class="incomes-container">
+      <h1>
+        Incomes:
+      </h1>
+      <div *ngIf="incomes">
+        <ng-container *ngFor="let income of incomes">
+          <app-income-container [income]="income"></app-income-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="expenses-container">
+      <h1>
+        Expenses:
+      </h1>
+      <div *ngIf="expenses">
+        <ng-container *ngFor="let expense of expenses">
+          <app-expense-container [expense]="expense"></app-expense-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-container" *ngIf="activeButton === 'set'">
+    <h1>Settings:</h1>
+    <form class="form-settings-styles" [formGroup]="form" (ngSubmit)="saveSettings()">
+      <p>Percent from trip: </p>
+      <input type="text" formControlName="percent">
+      <p>Current rate: </p>
+      <select formControlName="rate">
+        <option value="Low">Low</option>
+        <option value="Normal">Normal</option>
+        <option value="High">High</option>
+      </select>
+      <button id="save-button" type="submit">Save</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="graphic-container" *ngIf="incomes && expenses">
+  <ngx-charts-bar-vertical [results]="results"
+                           [view]="[1000, 650]"
+                           [xAxis]="true"
+                           [yAxis]="true"
+                           [showXAxisLabel]="true"
+                           [xAxisLabel]="'Incomes / Expenses'"
+                           [showYAxisLabel]="true"
+                           [yAxisLabel]="' UAH '"
+                           [results]="results"
+                           [legend]="false"
+                           [legendTitle]="''"
+                           [showGridLines]="true"
+                           [animations]="false">
+
+  </ngx-charts-bar-vertical>
+
+  <p>Profit: {{ profit | currency: "UAH "}}</p>
+</div>

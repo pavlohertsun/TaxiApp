@@ -1,0 +1,27 @@
+::ng-deep .ngx-charts text {
+  fill: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0.1vw;
+}
+::ng-deep .legend-labels text {
+  fill: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0.1vw;
+}
+.graphic-container{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.graphic-container p{
+  margin-left: 5%;
+}

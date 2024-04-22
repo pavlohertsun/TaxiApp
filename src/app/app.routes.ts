@@ -8,14 +8,21 @@ import {AuthGuard} from "./guards/auth.guard"
 import {DriverPageComponent} from "./pages/driver-page/driver-page.component";
 import {DriverProfilePageComponent} from "./pages/driver-profile-page/driver-profile-page.component";
 import {AdminPageComponent} from "./pages/admin-page/admin-page.component";
+import {DriverRoleGuard} from "./guards/driver-role.guard";
+import {CustomerRoleGuard} from "./guards/customer-role.guard";
+import {AdminRoleGuard} from "./guards/admin-role.guard";
+import {ResponsePageComponent} from "./pages/response-page/response-page.component";
+import {DriverResponseComponent} from "./pages/driver-response/driver-response.component";
 
 export const routes: Routes = [
   {path: "", component: MainPageComponent},
   {path: "login", component: LoginPageComponent},
   {path: "register", component: SignupPageComponent},
-  {path: "map", component: MapPageComponent, canActivate: [AuthGuard]},
-  {path: "profile", component: ProfilePageComponent, canActivate: [AuthGuard]},
-  {path: "driver", component: DriverPageComponent, canActivate: [AuthGuard]},
-  {path: "dprofile", component: DriverProfilePageComponent, canActivate: [AuthGuard]},
-  {path: "admin", component: AdminPageComponent},
+  {path: "response", component: ResponsePageComponent},
+  {path: "dresponse", component: DriverResponseComponent},
+  {path: "map", component: MapPageComponent, canActivate: [AuthGuard, CustomerRoleGuard]},
+  {path: "profile", component: ProfilePageComponent, canActivate: [AuthGuard, CustomerRoleGuard]},
+  {path: "driver", component: DriverPageComponent, canActivate: [AuthGuard, DriverRoleGuard]},
+  {path: "dprofile", component: DriverProfilePageComponent, canActivate: [AuthGuard, DriverRoleGuard]},
+  {path: "admin", component: AdminPageComponent, canActivate: [AuthGuard, AdminRoleGuard]},
 ];

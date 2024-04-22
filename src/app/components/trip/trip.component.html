@@ -1,0 +1,66 @@
+<div class="trip-container" (click)="changeView()" *ngIf="customerTrip">
+  <div class="outside-container">
+    <div class="brief-info-container">
+      <p>
+        Date: {{ customerTrip.endTime | date }}
+      </p>
+      <p class="end-point-p">
+        Destination: {{ customerTrip.endPoint }}
+      </p>
+      <div class="green-circle" [ngClass]="{'cancelled-trip': cancelledTrip}"></div>
+    </div>
+    <div *ngIf="detailInfo" class="detail-info">
+      <p>
+        Start time: {{ customerTrip.startTime| date: 'dd/MM/yyyy HH:mm:ss' }}
+      </p>
+      <p>
+        End time: {{  customerTrip.endTime| date: 'dd/MM/yyyy HH:mm:ss' }}
+      </p>
+      <p>
+        Start: {{ customerTrip.startPoint}}
+      </p>
+      <p>
+        Price: {{ customerTrip.price | currency: "UAH "}}
+      </p>
+      <p>
+        Driver: {{  customerTrip.driverName }} {{  customerTrip.driverSurname }}
+      </p>
+      <p>
+        Description: {{  customerTrip.description }}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="trip-container" (click)="changeView()" *ngIf="driverTrip">
+  <div class="outside-container">
+    <div class="brief-info-container">
+      <p>
+        Date: {{ driverTrip.endTime | date }}
+      </p>
+      <p class="end-point-p">
+        Destination: {{ driverTrip.endPoint }}
+      </p>
+      <div class="green-circle" [ngClass]="{'cancelled-trip': cancelledTrip}"></div>
+    </div>
+    <div *ngIf="detailInfo" class="detail-info">
+      <p>
+        Start time: {{ driverTrip.startTime| date: 'dd/MM/yyyy HH:mm:ss' }}
+      </p>
+      <p>
+        End time: {{  driverTrip.endTime| date: 'dd/MM/yyyy HH:mm:ss' }}
+      </p>
+      <p>
+        Start: {{ driverTrip.startPoint}}
+      </p>
+      <p>
+        Price: {{ driverTrip.price | currency: "UAH "}}
+      </p>
+      <p>
+        Customer: {{  driverTrip.userName }} {{  driverTrip.userSurname }}
+      </p>
+      <p>
+        Description: {{  driverTrip.description }}
+      </p>
+    </div>
+  </div>
+</div>

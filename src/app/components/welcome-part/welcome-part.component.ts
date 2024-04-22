@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-welcome-part',
@@ -11,5 +11,15 @@ import {RouterLink} from "@angular/router";
   styleUrl: './welcome-part.component.css'
 })
 export class WelcomePartComponent {
-
+  constructor(private router: Router) {
+  }
+  findTaxiButtonFunc(){
+    const role = localStorage.getItem('userRole');
+    if(role === 'DRIVER'){
+      this.router.navigate(['/driver']).then(r => ['/']);
+    }
+    else if(role === 'USER'){
+      this.router.navigate(['/map']).then(r => ['/']);
+    }
+  }
 }

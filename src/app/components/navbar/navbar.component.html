@@ -3,16 +3,16 @@
     <img src="/assets/logo.png" alt="logo">
   </div>
   <div class="right-container">
-    <button class="button-styles button-font-styles">
+    <button class="button-styles button-font-styles" (click)="homeButtonFunc()">
       Home
     </button>
-    <button class="button-styles button-font-styles">
+    <button class="button-styles button-font-styles" (click)="serviceButtonFunc()">
       Service
     </button>
-    <button class="button-styles button-font-styles">
+    <button class="button-styles button-font-styles" (click)="aboutUsButtonFunc()">
       About us
     </button>
-    <button class="button-styles button-font-styles" (click)="buttonFunc()">
+    <button class="button-styles button-font-styles" (click)="loginProfileButtonFunc()">
       {{ buttonText }}
     </button>
   </div>

@@ -7,6 +7,6 @@ export interface IDriverProfileTrip{
   status: string,
   rate: string
   description: string,
-  driverName: string,
-  driverSurname: string
+  userName: string,
+  userSurname: string
 }

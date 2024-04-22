@@ -1,0 +1,46 @@
+<app-navbar>
+
+</app-navbar>
+<div class="outside-container">
+  <div class="profile-headlines-container">
+    <button class="button-styles" (click)="setActiveButton('info')"
+            [ngClass]="{ 'active-button': activeButton === 'info' }">
+      Your info
+    </button>
+    <button class="button-styles" (click)="setActiveButton('trips')"
+            [ngClass]="{ 'active-button': activeButton === 'trips' }">
+      Your trips
+    </button>
+    <button (click)="signOut()" class="log-out-button">
+      Sign out
+    </button>
+  </div>
+  <div class="profile_container" *ngIf="customer && isCustomer && activeButton === 'info'">
+    <p>
+      Name: {{ customer.name }}
+    </p>
+    <p>
+      Surname: {{ customer.surname }}
+    </p>
+    <p>
+      Email: {{ customer.email }}
+    </p>
+    <p>
+      Phone number: {{ customer.phoneNumber }}
+    </p>
+    <p>
+      Rating: {{ customer.rating }}
+    </p>
+    <p>
+      Balance : {{ customer.balance | currency: "UAH "}}
+    </p>
+    <button class="log-out-button" (click)="topUpBalance()">
+      Top up balance
+    </button>
+  </div>
+  <div *ngIf="customer && customer.trips && activeButton === 'trips'" class="trips-container">
+    <ng-container *ngFor="let trip of customer.trips">
+      <app-trip [customerTrip]="trip"></app-trip>
+    </ng-container>
+  </div>
+</div>

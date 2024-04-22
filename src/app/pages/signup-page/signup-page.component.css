@@ -76,3 +76,7 @@
 .register_container a{
   margin-left: 2%;
 }
+#signup_button:hover{
+  color: #F6BD60;
+  background-color: #FFFFFF;
+}

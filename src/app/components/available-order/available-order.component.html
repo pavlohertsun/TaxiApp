@@ -1,0 +1,14 @@
+<div class="available-order-container">
+  <p>
+    From: {{ trip.startPoint }}
+  </p>
+  <p>
+    To: {{ trip.endPoint }}
+  </p>
+  <p>
+    Price {{ trip.price | currency: "UAH "}}
+  </p>
+  <button (click)="emitId(trip.id)" class="take-order-button">
+    Take order
+  </button>
+</div>

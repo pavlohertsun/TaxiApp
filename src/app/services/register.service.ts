@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ILoginDto} from "../dtos/login";
 import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders, HttpStatusCode} from "@angular/common/http";
 import {IAuthResponseDto} from "../dtos/auth-response";
+import {IRegisterDto} from "../dtos/register-dto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class RegisterService {
 
   constructor(private http: HttpClient) { }
-  login(loginDto: ILoginDto): Observable<IAuthResponseDto>{
+  register(registerDto: IRegisterDto): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<IAuthResponseDto>('http://localhost:8080/auth/login', loginDto, {headers});
+    return this.http.post<any>('http://localhost:8080/auth/register', registerDto, {headers});
   }
 }

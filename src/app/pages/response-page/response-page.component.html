@@ -1,0 +1,22 @@
+<app-navbar>
+
+</app-navbar>
+<div style="background-color: #B18C38; height: 100vw">
+  <div class="settings-container">
+    <h1>How was your trip: </h1>
+    <form class="form-settings-styles" [formGroup]="form" (ngSubmit)="sendResponse()">
+      <p>Rate: </p>
+      <select formControlName="rate">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <p>You can write a comment: </p>
+      <input type="text" formControlName="comment">
+      <button id="save-button" type="submit">Save</button>
+    </form>
+  </div>
+</div>
+

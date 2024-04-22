@@ -1,0 +1,65 @@
+<app-navbar>
+
+</app-navbar>
+<div class="outside-container">
+  <div class="profile-headlines-container">
+    <button class="button-styles" (click)="setActiveButton('info')"
+            [ngClass]="{ 'active-button': activeButton === 'info' }">
+      Your info
+    </button>
+    <button class="button-styles" (click)="setActiveButton('trips')"
+            [ngClass]="{ 'active-button': activeButton === 'trips' }">
+      Your trips
+    </button>
+    <button class="button-styles" (click)="setActiveButton('rating')"
+            [ngClass]="{ 'active-button': activeButton === 'rating' }">
+      Your rating
+    </button>
+    <button (click)="signOut()" class="log-out-button">
+      Sign out
+    </button>
+  </div>
+  <div class="profile_container" *ngIf="driver && isDriver && activeButton === 'info'">
+    <p>
+      Name: {{ driver.name }}
+    </p>
+    <p>
+      Surname: {{ driver.surname }}
+    </p>
+    <p>
+      Email: {{ driver.email }}
+    </p>
+    <p>
+      Phone number: {{ driver.phoneNumber }}
+    </p>
+    <p>
+      License: {{ licenseText }}
+    </p>
+    <p>
+      Balance : {{ driver.balance | currency: "UAH " }}
+    </p>
+  </div>
+  <div *ngIf="driver && driver.trips && activeButton === 'trips'" class="trips-container">
+    <ng-container *ngFor="let trip of driver.trips">
+      <app-trip [driverTrip]="trip"></app-trip>
+    </ng-container>
+  </div>
+  <div *ngIf="activeButton === 'rating'" class="rating-container">
+    <p>
+      Trips count: {{ driverRating.tripsCount }}
+    </p>
+    <p>
+      Rating: {{ driverRating.tripsCount }}
+    </p>
+    <p>
+      Comments:
+    </p>
+    <div class="comments-container">
+      <ng-container *ngFor="let review of driverRating.reviews; let i = index">
+        <p *ngIf="i < 3">
+          {{ review.comment }}
+        </p>
+      </ng-container>
+    </div>
+  </div>
+</div>

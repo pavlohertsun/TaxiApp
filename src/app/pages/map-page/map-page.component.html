@@ -26,13 +26,14 @@
     <div class="right-container">
       <div *ngIf="price != 0" class="price-container">
         <p>
-          Economy:    {{ price | currency: "UAH " }}
+          Price:    {{ price | currency: "UAH " }}
         </p>
       </div>
       <div class="button-container">
         <button (click)="orderTaxi()">
           Order
         </button>
+        <p *appNotEnoughBalance="enoughBalance">Not enough balance to order</p>
       </div>
     </div>
   </div>
@@ -47,26 +48,53 @@
         <div class="newtons-cradle__dot"></div>
         <div class="newtons-cradle__dot"></div>
       </div>
+    <button class="cancel-order-button" (click)="cancelOrder()">
+      Cancel order
+    </button>
   </div>
   <div *ngIf="foundDriver" class="order-container">
+    <h1 *ngIf="driver.arrived">Driver arrived!</h1>
     <p>
       From: {{startAddress}}
     </p>
     <p>
       To: {{destinationAddress}}
     </p>
-    <p>
+    <p (mouseenter)="showDriverDetails = true" (mouseleave)="showDriverDetails = false">
       Your driver: {{ driver.name }}
     </p>
     <p>
       Phone: {{ driver.surname }}
     </p>
     <p>
-      Car number:
+      Car number: {{ driver.licensePlate }}
     </p>
-    <h1 *ngIf="driver.arrived">Driver arrived!</h1>
     <button class="cancel-order-button" (click)="cancelOrder()">
       Cancel order
     </button>
+  </div>
+</div>
+
+<div *ngIf="showDriverDetails"
+     [style.left]="mousePosition.x + 'px'" [style.top]="mousePosition.y + 'px'"
+     class="driver-details">
+  <p>
+    Driver: {{driver.name}}
+  </p>
+  <p>
+    Trips count: {{driverRating.tripsCount}}
+  </p>
+  <p>
+    Rating: {{driverRating.rating}}
+  </p>
+  <p>
+    Reviews:
+  </p>
+  <div class="comments-container">
+    <ng-container *ngFor="let review of driverRating.reviews">
+      <p>
+        {{ review.comment }}
+      </p>
+    </ng-container>
   </div>
 </div>

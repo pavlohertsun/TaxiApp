@@ -44,7 +44,16 @@ export class LoginPageComponent {
           console.log('Login successful:', response);
           localStorage.setItem('accessToken', response.jwtToken.token);
           localStorage.setItem('userId', String(response.userDto.id));
-          this.router.navigate(['/profile']).then(r => ['/']);
+          localStorage.setItem('userRole', String(response.userDto.role));
+          if(response.userDto.role === 'USER'){
+            this.router.navigate(['/profile']).then(r => ['/']);
+          }
+          else if(response.userDto.role === 'DRIVER'){
+            this.router.navigate(['/dprofile']).then(r => ['/']);
+          }
+          else if(response.userDto.role === 'ADMIN'){
+            this.router.navigate(['/admin']).then(r => ['/']);
+          }
           this.accessDenied = false;
         },
         error: (error: any) => {

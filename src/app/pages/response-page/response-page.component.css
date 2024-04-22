@@ -1,0 +1,50 @@
+.settings-container{
+  margin-left: 5%;
+  padding-top: 2%;
+}
+.settings-container h1{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #FFFFFF;
+}
+.form-settings-styles{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.form-settings-styles p{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.form-settings-styles input{
+  width: 25%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.form-settings-styles select{
+  width: 28.5%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-bottom: 2%;
+}
+#save-button{
+  color: #B18C38;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  width: 28.5%;
+  font-size: 20px;
+  padding: 10px 0 10px 0;
+  margin-top: 2%;
+}

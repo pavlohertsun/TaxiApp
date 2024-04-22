@@ -49,6 +49,7 @@
 .button-container{
   margin-top: 2%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -63,6 +64,13 @@
   border: none;
   border-radius: 10px;
   height: 40px;
+}
+.button-container p{
+  color: #b13842;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
 }
 .waiting-container{
   display: flex;
@@ -158,6 +166,10 @@
   display: flex;
   flex-direction: column;
 }
+.order-container h1{
+  justify-self: center;
+  align-self: center;
+}
 .cancel-order-button{
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
@@ -174,4 +186,23 @@
 }
 .cancel-order-button:hover {
   background-color: #b13842;
+}
+.driver-details {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  color: #FFFFFF;
+  position: absolute;
+  background-color: #B18C38;
+  border: none;
+  padding: 10px;
+  z-index: 9999;
+  margin-top: 42%;
+  margin-left: 15%;
+}
+.comments-container p{
+  padding: 10px 20px 10px 20px;
+  border-bottom: 1px solid #FFFFFF;
+  border-top: 1px solid #FFFFFF;
 }

@@ -1,0 +1,114 @@
+.outside-container{
+  background-color: #B18C38;
+  height: 100vw;
+}
+.profile-headlines-container{
+   display: flex;
+   align-items: center;
+   margin: 0 0 2% 0;
+   padding-top: 3%;
+ }
+.button-styles{
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  color: #FFFFFF;
+  background-color: #B18C38;
+  margin-left: 5%;
+  padding-bottom: 0.5%;
+}
+.active-button{
+  border-bottom: 2px solid #FFFFFF;
+}
+.log-out-button{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  background-color: #FFFFFF;
+  color: #B18C38;
+  border-radius: 10px;
+  border: none;
+  padding: 10px 20px 10px 20px;
+  margin-left: auto;
+  margin-right: 5%;
+}
+.graphic-container{
+
+}
+.settings-container{
+  margin-left: 5%;
+}
+.settings-container h1{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #FFFFFF;
+}
+.form-settings-styles{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.form-settings-styles p{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.form-settings-styles input{
+  width: 25%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.form-settings-styles select{
+  width: 28.5%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-bottom: 2%;
+}
+#save-button{
+  color: #B18C38;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  width: 28.5%;
+  font-size: 20px;
+  padding: 10px 0 10px 0;
+}
+.transactions-container{
+  display: flex;
+  margin-left: 5%;
+}
+.incomes-container h1{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #FFFFFF;
+}
+.expenses-container h1{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #FFFFFF;
+}
+.incomes-container{
+  flex: 1;
+  margin-right: 2%;
+}
+.expenses-container{
+  flex: 1;
+  margin-right: 3%;
+}

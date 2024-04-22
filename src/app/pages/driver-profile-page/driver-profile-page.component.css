@@ -1,0 +1,65 @@
+.outside-container{
+  background-color: #B18C38;
+  height: 100vw;
+}
+
+.profile_container{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+  background-color: #B18C38;
+  margin-left: 5%;
+}
+.profile-headlines-container{
+  display: flex;
+  align-items: center;
+  margin: 0 0 2% 0;
+  padding-top: 3%;
+}
+.button-styles{
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  color: #FFFFFF;
+  background-color: #B18C38;
+  margin-left: 5%;
+  padding-bottom: 0.5%;
+}
+.active-button{
+  border-bottom: 2px solid #FFFFFF;
+}
+.log-out-button{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  background-color: #FFFFFF;
+  color: #B18C38;
+  border-radius: 10px;
+  border: none;
+  padding: 10px 20px 10px 20px;
+  margin-left: auto;
+  margin-right: 5%;
+}
+
+.rating-container{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+  margin-left: 5%;
+}
+.comments-container{
+  margin-left: 2%;
+  margin-right: 5%;
+}
+.comments-container p{
+  padding: 10px 20px 10px 20px;
+  border-bottom: 1px solid #FFFFFF;
+  border-top: 1px solid #FFFFFF;
+}
