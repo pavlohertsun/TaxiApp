@@ -38,23 +38,32 @@
     <p>
       Balance : {{ driver.balance | currency: "UAH " }}
     </p>
+    <button class="log-out-button" (click)="authenticateMe()" *ngIf="!driver.license">
+      Authenticate me
+    </button>
   </div>
   <div *ngIf="driver && driver.trips && activeButton === 'trips'" class="trips-container">
     <ng-container *ngFor="let trip of driver.trips">
       <app-trip [driverTrip]="trip"></app-trip>
     </ng-container>
+    <p *ngIf="driver.trips.length < 1" class="rating-container">
+      You have no trips
+    </p>
   </div>
-  <div *ngIf="activeButton === 'rating'" class="rating-container">
+  <div *ngIf="activeButton === 'rating' && driverRating" class="rating-container">
     <p>
       Trips count: {{ driverRating.tripsCount }}
     </p>
     <p>
-      Rating: {{ driverRating.tripsCount }}
+      Rating: {{ driverRating.rating }}
     </p>
     <p>
       Comments:
     </p>
-    <div class="comments-container">
+    <p *ngIf="driverRating.reviews.length < 1">
+      You have no reviews
+    </p>
+    <div class="comments-container" *ngIf="driverRating.reviews">
       <ng-container *ngFor="let review of driverRating.reviews; let i = index">
         <p *ngIf="i < 3">
           {{ review.comment }}

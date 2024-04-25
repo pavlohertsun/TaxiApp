@@ -1,0 +1,8 @@
+<div class="question-container">
+  <p (click)="toggleAnswer(faq)">
+    {{ faq.question }}
+  </p>
+  <p [hidden]="!faq.expanded">
+    {{ faq.answer }}
+  </p>
+</div>

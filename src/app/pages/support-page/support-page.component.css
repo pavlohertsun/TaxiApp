@@ -1,0 +1,47 @@
+.outside-container{
+  background-color: #B18C38;
+  height: 100vw;
+}
+.req-container{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #FFFFFF;
+  margin-left: 3%;
+  padding-top: 2%;
+}
+.req-container p{
+  font-size: 26px;
+}
+.form-settings-styles{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.form-settings-styles p{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  color: #FFFFFF;
+}
+.form-settings-styles input{
+  width: 40%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.form-settings-styles button{
+  width: 29%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 2%;
+  margin-left: 7%;
+}

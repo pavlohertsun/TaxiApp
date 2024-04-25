@@ -13,6 +13,8 @@ import {CustomerRoleGuard} from "./guards/customer-role.guard";
 import {AdminRoleGuard} from "./guards/admin-role.guard";
 import {ResponsePageComponent} from "./pages/response-page/response-page.component";
 import {DriverResponseComponent} from "./pages/driver-response/driver-response.component";
+import {SupportPageComponent} from "./pages/support-page/support-page.component";
+import {WorkerPageComponent} from "./pages/worker-page/worker-page.component";
 
 export const routes: Routes = [
   {path: "", component: MainPageComponent},
@@ -20,9 +22,11 @@ export const routes: Routes = [
   {path: "register", component: SignupPageComponent},
   {path: "response", component: ResponsePageComponent},
   {path: "dresponse", component: DriverResponseComponent},
+  {path: "support", component: SupportPageComponent},
+  {path: "worker", component: WorkerPageComponent},
   {path: "map", component: MapPageComponent, canActivate: [AuthGuard, CustomerRoleGuard]},
   {path: "profile", component: ProfilePageComponent, canActivate: [AuthGuard, CustomerRoleGuard]},
   {path: "driver", component: DriverPageComponent, canActivate: [AuthGuard, DriverRoleGuard]},
   {path: "dprofile", component: DriverProfilePageComponent, canActivate: [AuthGuard, DriverRoleGuard]},
-  {path: "admin", component: AdminPageComponent, canActivate: [AuthGuard, AdminRoleGuard]},
+  {path: "admin", component: AdminPageComponent, canActivate: [AuthGuard]},
 ];

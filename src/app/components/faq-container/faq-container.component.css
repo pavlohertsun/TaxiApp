@@ -1,0 +1,22 @@
+.question-container {
+  background-color: rgba(0,0,0, 0.1);
+  border-radius: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  display: inline-block;
+  padding-left: 5%;
+  padding-right: 2%;
+  width: 400px;
+  margin-bottom: 1%;
+}
+div p {
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+div hidden {
+  max-height: 0;
+  overflow: hidden;
+}

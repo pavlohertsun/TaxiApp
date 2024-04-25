@@ -33,7 +33,10 @@ export class NavbarComponent implements OnInit{
     this.router.navigate(['/']).then(r => ['/']);
   }
   aboutUsButtonFunc(){
-    this.router.navigate(['/']).then(r => ['/']);
+    this.router.navigate(['/about']).then(r => ['/']);
+  }
+  supportButtonFunc(){
+    this.router.navigate(['/support']).then(r => ['/']);
   }
 
   serviceButtonFunc(){

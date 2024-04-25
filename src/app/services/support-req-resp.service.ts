@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ICustomer} from "../models/customer";
-import {ICustomerTrip} from "../models/customer-trip";
+import {ISupportReqDto} from "../dtos/support-req-dto";
+import {ISupportRespDto} from "../dtos/support-resp-dto";
+import {ISupportRequest} from "../models/support-request";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
+export class SupportReqRespService {
 
   constructor(private http: HttpClient) { }
-  getProfile(id: number): Observable<ICustomer> {
+  createRequest(request: ISupportReqDto): Observable<any>{
     const token = "Bearer " + localStorage.getItem('accessToken')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     });
-    return this.http.get<ICustomer>("http://localhost:8080/api/customer/" + id, { headers: headers });
+    return this.http.post<any>('http://localhost:8080/api/support', request, {headers});
   }
-  getTrips(id: number): Observable<ICustomerTrip[]> {
+  setResponseToRequest(response: ISupportRespDto): Observable<any>{
     const token = "Bearer " + localStorage.getItem('accessToken')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     });
-    return this.http.get<ICustomerTrip[]>("http://localhost:8080/api/customer/" + id + '/trips', { headers: headers });
+    return this.http.put<any>('http://localhost:8080/api/support', response, {headers});
   }
-  getBalance(id: number): Observable<number> {
+  getAllProcessingRequests(): Observable<ISupportRequest[]>{
     const token = "Bearer " + localStorage.getItem('accessToken')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     });
-    return this.http.get<number>("http://localhost:8080/api/customer/" + id + '/balance', { headers: headers });
+    return this.http.get<ISupportRequest[]>('http://localhost:8080/api/support', {headers});
   }
 }

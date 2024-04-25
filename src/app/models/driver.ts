@@ -9,5 +9,6 @@ export interface IDriver{
   phoneNumber: string,
   balance: number,
   license: boolean,
+  status: string,
   trips: IDriverProfileTrip[]
 }

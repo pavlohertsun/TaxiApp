@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {PriceRequest} from "../dtos/price-request";
 import {Observable} from "rxjs";
-import {ICustomer} from "../models/customer";
-import {ICustomerTrip} from "../models/customer-trip";
+import {IDriverToAuthenticate} from "../models/driver-to-authenticate";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
+export class AuthenticateDriverService {
 
   constructor(private http: HttpClient) { }
-  getProfile(id: number): Observable<ICustomer> {
+  getAllNonAuthenticatedDrivers(): Observable<IDriverToAuthenticate[]>{
     const token = "Bearer " + localStorage.getItem('accessToken')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     });
-    return this.http.get<ICustomer>("http://localhost:8080/api/customer/" + id, { headers: headers });
+    return this.http.get<IDriverToAuthenticate[]>('http://localhost:8080/api/driver/', {headers});
   }
-  getTrips(id: number): Observable<ICustomerTrip[]> {
+  authenticateDriver(driver: IDriverToAuthenticate):Observable<any>{
     const token = "Bearer " + localStorage.getItem('accessToken')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     });
-    return this.http.get<ICustomerTrip[]>("http://localhost:8080/api/customer/" + id + '/trips', { headers: headers });
+    return this.http.put<any>('http://localhost:8080/api/driver/authenticate', driver,{headers});
   }
-  getBalance(id: number): Observable<number> {
+  setLicenseTrue(id: number): Observable<any>{
     const token = "Bearer " + localStorage.getItem('accessToken')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${token}`
     });
-    return this.http.get<number>("http://localhost:8080/api/customer/" + id + '/balance', { headers: headers });
+    return this.http.put<any>('http://localhost:8080/api/driver/authenticate', id,{headers});
   }
 }

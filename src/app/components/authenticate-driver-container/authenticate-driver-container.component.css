@@ -1,0 +1,22 @@
+.driver-authenticate-container{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 22px;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 1%;
+  padding-bottom: 1%;
+  border-bottom: 1px solid #FFFFFF;
+}
+.driver-authenticate-container button{
+  width: 15%;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+}

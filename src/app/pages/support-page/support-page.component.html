@@ -1,0 +1,16 @@
+<app-navbar>
+
+</app-navbar>
+<div class="outside-container">
+  <div class="req-container">
+    <p>
+      Write about your problem:
+    </p>
+    <form action="" [formGroup]="form" (ngSubmit)="sendRequest()" class="form-settings-styles">
+      <input type="text" formControlName="request">
+      <button type="submit">
+        Send
+      </button>
+    </form>
+  </div>
+</div>

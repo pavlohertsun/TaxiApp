@@ -1,0 +1,17 @@
+<div *ngIf="request" class="request-container">
+  <p>
+    User: {{ request.userName }}
+  </p>
+  <p>
+    Request: {{ request.request }}
+  </p>
+  <form action="" [formGroup]="form" (ngSubmit)="sendResponse()" class="form-settings-styles">
+    <p>
+      Response:
+    </p>
+    <input type="text" formControlName="response">
+    <button type="submit">
+      Answer
+    </button>
+  </form>
+</div>

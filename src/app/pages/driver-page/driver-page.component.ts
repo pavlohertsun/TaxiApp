@@ -27,7 +27,7 @@ import {GetAllInProgressTripsService} from "../../services/get-all-in-progress-t
   templateUrl: './driver-page.component.html',
   styleUrl: './driver-page.component.css'
 })
-export class DriverPageComponent{
+export class DriverPageComponent implements OnInit{
   trip!: ITrip;
   trips: ITrip[] = [];
 
@@ -38,44 +38,40 @@ export class DriverPageComponent{
   foundTrip = false;
 
   buttonText = 'Arrived';
-  constructor(private websocketService: WebsocketService, private tripInfoService: TripInfoService,
-              private router: Router, private inProgressService: GetAllInProgressTripsService) {
+
+  driverBanned = false;
+  constructor(private websocketService: WebsocketService,
+              private tripInfoService: TripInfoService,
+              private router: Router) {
   }
 
+  async ngOnInit(): Promise<void> {
+    try {
+      await this.websocketService.connect();
+      this.websocketService.subscribeForDriver((response) => {
+        const tripJson: any = JSON.parse(response.body);
+
+        this.trip = tripJson;
+        this.trips.push(tripJson);
+        console.log("trips" + this.trips);
+      });
+      this.websocketService.subscribeForCancelling((response) => {
+            this.websocketService.disconnect();
+            location.reload();
+      });
+    } catch (error) {
+      console.error("Error connecting to WebSocket", error);
+    }
+  }
+
+
   activate(){
-    this.driverActive = !this.driverActive;
-    // this.inProgressService.getAllInProgressTrips()
-    //   .pipe(take(1))
-    //   .subscribe({
-    //     next: (response: ITrip[]) => {
-    //       response.forEach(trip => {
-    //         console.log(trip);
-    //         this.trips.push(trip);
-    //       });
-    //       console.log('trips from service: ' + this.trips[0]);
-    //     },
-    //     error: (error: any) => {
-    //       console.error('Cannot find a profile', error);
-    //
-    //     },
-    //     complete: () => {
-    //     }
-    //   });
-
-    this.websocketService.subscribeForDriver((response) => {
-      const tripJson: any = JSON.parse(response.body);
-
-      this.trip = tripJson;
-      // console.log(this.trip);
-      this.trips.push(tripJson);
-      console.log("trips" + this.trips);
-    });
-
-    this.websocketService.subscribeForCancelling((response) => {
-      this.websocketService.disconnect();
-      location.reload();
-    });
-
+    if(localStorage.getItem('driverStatus') === 'Authenticated'){
+      this.driverActive = !this.driverActive;
+    }
+    else {
+      this.driverBanned = true;
+    }
   }
   takeOrder(){
     // @ts-ignore

@@ -41,8 +41,15 @@ export class DriverProfilePageComponent implements OnInit{
           this.driver = response;
           this.driver.trips = [];
           this.isDriver = true;
-          if(this.driver.license){
+          localStorage.setItem('driverStatus', this.driver.status);
+          if(this.driver.status === 'Authenticated' && this.driver.license){
             this.licenseText = 'Authenticated';
+          }
+          else if(this.driver.status === 'Non-authenticated' && this.driver.license){
+            this.licenseText = 'Non-authenticated (We will check your documents soon)';
+          }
+          else if(!this.driver.license){
+            this.licenseText = 'Non-authenticated (Send your documents on our email and we will check it)';
           }
         },
         error: (error: any) => {
@@ -69,7 +76,6 @@ export class DriverProfilePageComponent implements OnInit{
       .subscribe({
         next: (response: IDriverRating) => {
           this.driverRating = response;
-          console.log(this.driverRating);
         },
         error: (error: any) => {
           console.error('Cannot find a rating', error);
@@ -83,6 +89,23 @@ export class DriverProfilePageComponent implements OnInit{
 
   setActiveButton(button: string): void {
     this.activeButton = button;
+  }
+  authenticateMe(){
+    // @ts-ignore
+    const userIdNumber = parseInt(localStorage.getItem('userId'), 10);
+    this.driverProfileService.authenticateMe(userIdNumber)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: IDriverRating) => {
+          this.driverRating = response;
+        },
+        error: (error: any) => {
+          console.error('Cannot find a rating', error);
+        },
+        complete: () => {
+        }
+      });
+    location.reload();
   }
   signOut(){
     localStorage.clear();

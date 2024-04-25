@@ -1,2 +1,28 @@
 <app-navbar></app-navbar>
 <app-welcome-part></app-welcome-part>
+<div class="outside-container">
+  <div class="faqs-class">
+    <h1>
+      FAQS
+    </h1>
+    <ng-container *ngFor="let faq of faqs">
+      <app-faq-container [faq]="faq">
+
+      </app-faq-container>
+    </ng-container>
+  </div>
+</div>
+<div class="footer-container">
+  <div class="social-media">
+    <a href="https://facebook.com/CabSwift" target="_blank">Facebook</a>
+    <a href="https://twitter.com/CabSwift" target="_blank">Twitter</a>
+    <a href="https://instagram.com/CabSwift" target="_blank">Instagram</a>
+  </div>
+  <div class="contact">
+    <p>Email: <a href="mailto:cab.swift.inc@gmail.com">email</a></p>
+    <p>Phone: +380963528218</p>
+  </div>
+</div>
+
+
+

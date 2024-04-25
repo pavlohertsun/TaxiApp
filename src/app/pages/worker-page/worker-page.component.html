@@ -1,0 +1,33 @@
+<app-navbar>
+
+</app-navbar>
+<div class="outside-container">
+  <div class="profile-headlines-container">
+    <button class="button-styles" (click)="setActiveButton('drivers')"
+            [ngClass]="{ 'active-button': activeButton === 'drivers' }">
+      Drivers
+    </button>
+    <button class="button-styles" (click)="setActiveButton('req')"
+            [ngClass]="{ 'active-button': activeButton === 'req' }">
+      Support requests
+    </button>
+    <button (click)="signOut()" class="log-out-button">
+      Sign out
+    </button>
+  </div>
+
+  <div class="requests-container" *ngIf="requests && activeButton === 'req'">
+    <ng-container *ngFor="let req of requests">
+      <app-support-request-container [request]="req">
+
+      </app-support-request-container>
+    </ng-container>
+  </div>
+  <div class="requests-container" *ngIf="requests && activeButton === 'drivers'">
+    <ng-container *ngFor="let driver of drivers">
+      <app-authenticate-driver-container [driver]="driver">
+
+      </app-authenticate-driver-container>
+    </ng-container>
+  </div>
+</div>

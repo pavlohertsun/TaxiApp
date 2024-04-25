@@ -38,4 +38,12 @@ export class DriverProfileService {
     });
     return this.http.get<IDriverRating>("http://localhost:8080/api/driver/" + id + '/rating', { headers: headers });
   }
+  authenticateMe(id: number){
+    const token = "Bearer " + localStorage.getItem('accessToken')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    return this.http.put<any>("http://localhost:8080/api/driver/", id,{ headers: headers });
+  }
 }

@@ -25,6 +25,7 @@ import {ISettings} from "../../models/settings";
 import {TripInfoService} from "../../services/trip-info.service";
 import {DriverProfileService} from "../../services/driver-profile.service";
 import {IDriverRating} from "../../models/driver-rating";
+import {ProfileService} from "../../services/profile.service";
 
 @Component({
   selector: 'app-map-page',
@@ -47,7 +48,7 @@ import {IDriverRating} from "../../models/driver-rating";
   templateUrl: './map-page.component.html',
   styleUrl: './map-page.component.css'
 })
-export class MapPageComponent implements OnInit{
+export class MapPageComponent implements OnInit {
   center!: google.maps.LatLngLiteral;
   zoom = 11;
 
@@ -82,23 +83,15 @@ export class MapPageComponent implements OnInit{
   rate!: string;
 
   driverRating!: IDriverRating;
+
   constructor(private mapDirectionsService: MapDirectionsService, private placesService: PlacesService,
               private converterService: ConvertToAddressService, private pricingService: PricingService,
               private geolocationService: GeolocationService, private websocketService: WebsocketService,
-              private router: Router, private settingsService: SettingsService, private tripService: TripInfoService,
-              private driverProfileService: DriverProfileService,) { }
+              private router: Router, private settingsService: SettingsService, private profileService: ProfileService,
+              private driverProfileService: DriverProfileService,) {
+  }
 
   ngOnInit(): void {
-    this.searchingForDriver = true;
-    this.foundDriver = true;
-    this.driver = {
-      id: 1,
-      name: 'OLo',
-      surname: 'tralik',
-      licensePlate: 'valik',
-      arrived: true,
-      ended: false,
-    };
     this.geolocationService.getCurrentPosition()
       .then(coords => {
         this.center = {lat: coords.latitude, lng: coords.longitude};
@@ -128,7 +121,20 @@ export class MapPageComponent implements OnInit{
       });
 
     // @ts-ignore
-    this.balance = parseFloat(localStorage.getItem('balance'));
+    this.profileService.getBalance(localStorage.getItem('userId'))
+      .pipe(take(1))
+      .subscribe({
+        next: (response: number) => {
+          this.balance = response
+          console.log(this.balance);
+        },
+        error: (error: any) => {
+          console.error('Cannot find a profile', error);
+
+        },
+        complete: () => {
+        }
+      });
   }
 
   search(): void {
@@ -138,6 +144,7 @@ export class MapPageComponent implements OnInit{
     }
     this.getAddressFromCoords();
   }
+
   searchPlace(name: string): void {
     this.placesService.findPlace(name)
       .then(results => {
@@ -160,17 +167,18 @@ export class MapPageComponent implements OnInit{
       this.directionsResults$ = this.mapDirectionsService.route(request).pipe(map(response => response.result));
     }, 1000);
   }
+
   handleIdClicked(id: number) {
     this.destinationLatitude = this.addresses[id - 1].lat;
     this.destinationLongitude = this.addresses[id - 1].lng;
     this.destinationAddress = this.addresses[id - 1].name;
     this.getDirection();
     this.pricingService.getPrice({
-      startAddress: { lat: this.startLatitude, lng: this.startLongitude},
+      startAddress: {lat: this.startLatitude, lng: this.startLongitude},
       endAddress: {lat: this.destinationLatitude, lng: this.destinationLongitude},
       rate: this.rate
     }).pipe(take(1)).subscribe({
-      next:(response: any) =>{
+      next: (response: any) => {
         this.price = response.price;
       },
       error: (error: any) => {
@@ -180,11 +188,12 @@ export class MapPageComponent implements OnInit{
       }
     });
   }
-  getAddressFromCoords(){
+
+  getAddressFromCoords() {
     const latlng = new google.maps.LatLng(this.startLatitude, this.startLongitude);
 
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'location': latlng }, (results, status) => {
+    geocoder.geocode({'location': latlng}, (results, status) => {
       if (status === 'OK') {
         // @ts-ignore
         if (results[0]) {
@@ -199,65 +208,74 @@ export class MapPageComponent implements OnInit{
       }
     });
   }
-  orderTaxi(){
-    if(this.checkIfEnoughBalanceToOrder()) {
-      this.websocketService.createTrip({
-        startPoint: this.startAddress,
-        endPoint: this.destinationAddress,
-        price: this.price,
-        status: 'Created',
-        rate: this.rate,
-        description: ' - ',
-        customerId: localStorage.getItem('userId')
-      });
-      this.getTripId();
 
-      this.websocketService.subscribeForCancelling((response) => {
-        this.searchingForDriver = false;
-        this.foundDriver = false;
-        this.websocketService.disconnect();
-        location.reload();
-      })
+  async orderTaxi() {
+    try {
+      await this.websocketService.connect();
+      if (this.checkIfEnoughBalanceToOrder()) {
+        this.websocketService.createTrip({
+          startPoint: this.startAddress,
+          endPoint: this.destinationAddress,
+          price: this.price,
+          status: 'Created',
+          rate: this.rate,
+          description: ' - ',
+          customerId: localStorage.getItem('userId')
+        });
+        this.getTripId();
 
-      this.searchingForDriver = true;
-      // @ts-ignore
-      this.websocketService.subscribeForCustomer(localStorage.getItem('userId'),(response) => {
-        const driverJson: any = JSON.parse(response.body);
-
-        console.log(driverJson);
-
-        this.searchingForDriver = true;
-        this.foundDriver = true;
-        this.driver = driverJson;
-
-        this.getDriverDetails();
-
-        if (this.driver.ended) {
+        this.websocketService.subscribeForCancelling((response) => {
           this.searchingForDriver = false;
           this.foundDriver = false;
           this.websocketService.disconnect();
-          localStorage.setItem('tripId', JSON.stringify(this.tripId))
-          this.router.navigate(['/response']).then(r => ['/']);
-        }
-      });
+          location.reload();
+        })
+
+        this.searchingForDriver = true;
+        // @ts-ignore
+        this.websocketService.subscribeForCustomer(localStorage.getItem('userId'), (response) => {
+          const driverJson: any = JSON.parse(response.body);
+
+          console.log(driverJson);
+
+          this.searchingForDriver = true;
+          this.foundDriver = true;
+          this.driver = driverJson;
+
+          this.getDriverDetails();
+
+          if (this.driver.ended) {
+            this.searchingForDriver = false;
+            this.foundDriver = false;
+            this.websocketService.disconnect();
+            localStorage.setItem('tripId', JSON.stringify(this.tripId))
+            this.router.navigate(['/response']).then(r => ['/']);
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error connecting to WebSocket", error);
     }
   }
-  getTripId(){
+
+  getTripId() {
     this.websocketService.subscribeForDriver((response) => {
       const tripJson: any = JSON.parse(response.body);
 
       this.tripId = tripJson.id;
     });
   }
-  cancelOrder(){
+
+  cancelOrder() {
     this.websocketService.cancelTrip(this.tripId);
     this.searchingForDriver = false;
     this.foundDriver = false;
     this.websocketService.disconnect();
     location.reload();
   }
-  checkIfEnoughBalanceToOrder() : boolean{
-    if(this.balance >= this.price){
+
+  checkIfEnoughBalanceToOrder(): boolean {
+    if (this.balance >= this.price) {
       this.enoughBalance = false;
       return true;
     }
@@ -265,7 +283,8 @@ export class MapPageComponent implements OnInit{
     this.enoughBalance = true;
     return false;
   }
-  getDriverDetails(){
+
+  getDriverDetails() {
     this.driverProfileService.getDriverRating(this.driver.id)
       .pipe(take(1))
       .subscribe({
@@ -280,8 +299,10 @@ export class MapPageComponent implements OnInit{
         }
       });
   }
+
   showDriverDetails = false;
-  mousePosition = { x: 0, y: 0 };
+  mousePosition = {x: 0, y: 0};
+
   onMouseMove(event: MouseEvent) {
     this.mousePosition.x = event.clientX;
     this.mousePosition.y = event.clientY;

@@ -13,7 +13,10 @@
       Available trips:
     </h1>
     <p *ngIf="!trip" class="no-available-p">No available trips yet</p>
-    <div *ngIf="trip">
+    <p *ngIf="driverBanned" class="driver-banned-container">
+      You can not apply trips because you are not authenticated
+    </p>
+    <div *ngIf="trips && driverActive">
       <ng-container *ngFor="let trip of trips">
         <app-available-order [trip]="trip" (idClicked)="handleIdClicked($event)">
 
