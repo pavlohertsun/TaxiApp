@@ -107,6 +107,27 @@ export class DriverProfilePageComponent implements OnInit{
       });
     location.reload();
   }
+  downloadFile(){
+    // @ts-ignore
+    const userIdNumber = parseInt(localStorage.getItem('userId'), 10);
+    this.driverProfileService.getInfoInJson(userIdNumber).subscribe(response => {
+      this.saveFile(response);
+    });
+  }
+  private saveFile(response: Blob): void {
+    const blob = new Blob([response], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+
+    const file = new File([blob], 'driverData.json', { type: 'application/json' });
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'driverData.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }
   signOut(){
     localStorage.clear();
     this.router.navigate(['/']).then(r => ['/']);

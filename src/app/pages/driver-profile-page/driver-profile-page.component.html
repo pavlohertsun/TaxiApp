@@ -41,6 +41,9 @@
     <button class="log-out-button" (click)="authenticateMe()" *ngIf="!driver.license">
       Authenticate me
     </button>
+    <button class="log-out-button" (click)="downloadFile()">
+      Export in JSON
+    </button>
   </div>
   <div *ngIf="driver && driver.trips && activeButton === 'trips'" class="trips-container">
     <ng-container *ngFor="let trip of driver.trips">
@@ -64,8 +67,8 @@
       You have no reviews
     </p>
     <div class="comments-container" *ngIf="driverRating.reviews">
-      <ng-container *ngFor="let review of driverRating.reviews; let i = index">
-        <p *ngIf="i < 3">
+      <ng-container *ngFor="let review of driverRating.reviews">
+        <p>
           {{ review.comment }}
         </p>
       </ng-container>

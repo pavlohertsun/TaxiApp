@@ -5,7 +5,7 @@
 .profile-headlines-container{
    display: flex;
    align-items: center;
-   margin: 0 0 2% 0;
+   margin: 0 0 1% 0;
    padding-top: 3%;
  }
 .button-styles{
@@ -111,4 +111,75 @@
 .expenses-container{
   flex: 1;
   margin-right: 3%;
+}
+.date-input-class{
+  margin-left: 6%;
+  margin-bottom: 1%;
+  display: flex;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.date-input-class input{
+  height: 30px;
+  margin-left: 2%;
+}
+.date-input-class button{
+  margin-left: 2%;
+  color: #B18C38;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+}
+.logs-container{
+  margin-right: 5%;
+}
+.logs-container h1{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #FFFFFF;
+  margin-left: 5%;
+}
+.exp-container{
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.exp-container input{
+  width: 25%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.exp-container h1{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #FFFFFF;
+}
+.exp-container button{
+  color: #B18C38;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  width: 15%;
+  margin-top: 1%;
+  margin-left: 5%;
 }

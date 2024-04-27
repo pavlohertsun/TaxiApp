@@ -6,7 +6,14 @@
     }
   </google-map>
 </div>
-<div *ngIf="!searchingForDriver">
+
+<div *ngIf="noGeo" class="no-geo-container">
+  <h1>
+    Please allow the geolocation in browser
+  </h1>
+</div>
+
+<div *ngIf="!searchingForDriver && !noGeo">
   <div class="outside-container">
     <div class="left-container">
       <div class="search-container">
@@ -33,7 +40,9 @@
         <button (click)="orderTaxi()">
           Order
         </button>
-        <p *appNotEnoughBalance="enoughBalance">Not enough balance to order</p>
+        <p *appNotEnoughBalance="enoughBalance" class="not-enough-balance">Not enough balance to order</p>
+        <p>Add a comment to your trip:</p>
+        <input type="text" [(ngModel)]="description">
       </div>
     </div>
   </div>
@@ -91,8 +100,8 @@
     Reviews:
   </p>
   <div class="comments-container">
-    <ng-container *ngFor="let review of driverRating.reviews">
-      <p>
+    <ng-container *ngFor="let review of driverRating.reviews; let i = index">
+      <p *ngIf="i < 3">
         {{ review.comment }}
       </p>
     </ng-container>

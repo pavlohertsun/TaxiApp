@@ -37,6 +37,9 @@
     <button class="log-out-button" (click)="topUpBalance()">
       Top up balance
     </button>
+    <button class="log-out-button" (click)="downloadFile()">
+      Export in JSON
+    </button>
   </div>
   <div *ngIf="customer && customer.trips && activeButton === 'trips'" class="trips-container">
     <ng-container *ngFor="let trip of customer.trips">

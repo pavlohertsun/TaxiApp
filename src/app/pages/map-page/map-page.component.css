@@ -65,12 +65,27 @@
   border-radius: 10px;
   height: 40px;
 }
-.button-container p{
+.not-enough-balance{
   color: #b13842;
+  font-size: 16px;
+}
+.button-container p{
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 16px;
+  font-size: 20px;
+}
+.button-container input{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  color: #404040;
+  border: 1px solid #404040;
+  border-radius: 10px;
+  padding: 10px 0 10px 10px;
+  outline: none;
+  width: 70%;
 }
 .waiting-container{
   display: flex;
@@ -205,4 +220,12 @@
   padding: 10px 20px 10px 20px;
   border-bottom: 1px solid #FFFFFF;
   border-top: 1px solid #FFFFFF;
+}
+.no-geo-container{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
 }

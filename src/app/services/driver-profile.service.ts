@@ -46,4 +46,15 @@ export class DriverProfileService {
     });
     return this.http.put<any>("http://localhost:8080/api/driver/", id,{ headers: headers });
   }
+  getInfoInJson(id: number): Observable<Blob> {
+    const token = "Bearer " + localStorage.getItem('accessToken')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    return this.http.get("http://localhost:8080/api/driver/downloadUserData/" + id, {
+      headers: headers,
+      responseType: 'blob'
+    });
+  }
 }

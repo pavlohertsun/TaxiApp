@@ -49,6 +49,7 @@ import {ProfileService} from "../../services/profile.service";
   styleUrl: './map-page.component.css'
 })
 export class MapPageComponent implements OnInit {
+  noGeo: boolean = false;
   center!: google.maps.LatLngLiteral;
   zoom = 11;
 
@@ -84,6 +85,8 @@ export class MapPageComponent implements OnInit {
 
   driverRating!: IDriverRating;
 
+  description!: string;
+
   constructor(private mapDirectionsService: MapDirectionsService, private placesService: PlacesService,
               private converterService: ConvertToAddressService, private pricingService: PricingService,
               private geolocationService: GeolocationService, private websocketService: WebsocketService,
@@ -97,9 +100,11 @@ export class MapPageComponent implements OnInit {
         this.center = {lat: coords.latitude, lng: coords.longitude};
         this.startLatitude = coords.latitude;
         this.startLongitude = coords.longitude;
+        this.noGeo = false;
       })
       .catch(error => {
         console.error(error)
+        this.noGeo = true;
         this.startLatitude = 49.8326598;
         this.startLongitude = 23.9298358;
         this.center = {lat: this.startLatitude, lng: this.startLongitude};
@@ -210,6 +215,9 @@ export class MapPageComponent implements OnInit {
   }
 
   async orderTaxi() {
+    if(this.description === ''){
+      this.description = ' - ';
+    }
     try {
       await this.websocketService.connect();
       if (this.checkIfEnoughBalanceToOrder()) {
@@ -219,7 +227,7 @@ export class MapPageComponent implements OnInit {
           price: this.price,
           status: 'Created',
           rate: this.rate,
-          description: ' - ',
+          description: this.description,
           customerId: localStorage.getItem('userId')
         });
         this.getTripId();

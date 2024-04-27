@@ -39,7 +39,6 @@ export class ProfilePageComponent implements OnInit{
             next: (response: ICustomer) => {
               console.log(response)
               this.customer = response;
-              localStorage.setItem('balance', JSON.stringify(this.customer.balance));
               this.customer.trips = [];
               this.isCustomer = true;
             },
@@ -87,6 +86,27 @@ export class ProfilePageComponent implements OnInit{
         complete: () => {
         }
       });
+  }
+  downloadFile(){
+    // @ts-ignore
+    const userIdNumber = parseInt(localStorage.getItem('userId'), 10);
+    this.profileService.getInfoInJson(userIdNumber).subscribe(response => {
+      this.saveFile(response);
+    });
+  }
+  private saveFile(response: Blob): void {
+    const blob = new Blob([response], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+
+    const file = new File([blob], 'userData.json', { type: 'application/json' });
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'CustomerData.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 
 }

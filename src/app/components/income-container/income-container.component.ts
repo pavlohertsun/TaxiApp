@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {IIncome} from "../../models/income";
 import {DatePipe} from "@angular/common";
 
@@ -11,6 +11,11 @@ import {DatePipe} from "@angular/common";
   templateUrl: './income-container.component.html',
   styleUrl: './income-container.component.css'
 })
-export class IncomeContainerComponent {
+export class IncomeContainerComponent implements OnChanges{
   @Input() income!: IIncome;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('income')) {
+
+    }
+  }
 }

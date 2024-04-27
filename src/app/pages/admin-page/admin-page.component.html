@@ -16,17 +16,37 @@
             [ngClass]="{ 'active-button': activeButton === 'set' }">
       System settings
     </button>
+    <button class="button-styles" (click)="setActiveButton('logs')"
+            [ngClass]="{ 'active-button': activeButton === 'logs' }">
+      Logs
+    </button>
+    <button class="button-styles" (click)="setActiveButton('exp')"
+            [ngClass]="{ 'active-button': activeButton === 'exp' }">
+      Expenses
+    </button>
     <button (click)="signOut()" class="log-out-button">
       Sign out
     </button>
   </div>
 
-  <div class="graphic-container" *ngIf="activeButton === 'stat' && expensesSum && incomesSum">
-    <app-statistic [incomes]="incomesSum" [expenses]="expensesSum">
+  <div class="graphic-container" *ngIf="activeButton === 'stat'">
+    <div class="date-input-class">
+      <p>Select a date: </p>
+      <input type="date" [(ngModel)]="selectedDateStatistic" min="2024-04-01">
+      <button (click)="getStatisticByDate()">Get statistic</button>
+    </div>
+    <div *ngIf="incomesSum >= 0 && expensesSum >= 0">
+      <app-statistic [incomes]="incomesSum" [expenses]="expensesSum">
 
-    </app-statistic>
+      </app-statistic>
+    </div>
   </div>
 
+  <div class="date-input-class" *ngIf="activeButton === 'trans'">
+    <p>Select a date: </p>
+    <input type="date" [(ngModel)]="selectedDateTransactions" min="2024-04-01">
+    <button (click)="getTransactionsByDate()">Get transactions</button>
+  </div>
   <div class="transactions-container" *ngIf="activeButton === 'trans'">
     <div class="incomes-container">
       <h1>
@@ -63,5 +83,40 @@
       </select>
       <button id="save-button" type="submit">Save</button>
     </form>
+  </div>
+
+  <div class="logs-container" *ngIf="activeButton === 'logs'">
+    <div class="date-input-class">
+      <p>Select a date: </p>
+      <input type="date" [(ngModel)]="selectedDateLogs" min="2024-04-01">
+      <button (click)="getLogsByDate()">Get logs</button>
+    </div>
+    <h1>Logs:</h1>
+    <div *ngIf="logs">
+      <ng-container *ngFor="let log of logs">
+        <app-log-container [log]="log"></app-log-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="exp-container" *ngIf="activeButton === 'exp'">
+    <h1>
+      Create expense:
+    </h1>
+    <p>
+      Sum:
+    </p>
+    <input type="text" [(ngModel)]="expenseSum">
+    <p>
+      Type:
+    </p>
+    <input type="text" [(ngModel)]="expenseType">
+    <p>
+      Description:
+    </p>
+    <input type="text" [(ngModel)]="expenseDescription">
+    <button (click)="createExpense()">
+      Create
+    </button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {BarChartModule} from "@swimlane/ngx-charts";
 import {IStatistic} from "../../models/statistic";
 import {IncomesExpensesService} from "../../services/incomes-expenses.service";
@@ -16,7 +16,7 @@ import {CurrencyPipe, NgIf} from "@angular/common";
   templateUrl: './statistic.component.html',
   styleUrl: './statistic.component.css'
 })
-export class StatisticComponent implements OnInit{
+export class StatisticComponent implements OnInit, OnChanges{
  results!: IStatistic[];
  input!: number;
 
@@ -29,16 +29,26 @@ export class StatisticComponent implements OnInit{
  }
 
   ngOnInit(): void {
-       this.results = [
-         {
-           name : 'Incomes',
-           value : this.incomes
-         },
-         {
-           name : 'Expenses',
-           value : this.expenses
-         }
-       ];
-       this.profit = this.incomes - this.expenses;
+    this.calculateTotal();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('incomes') || changes.hasOwnProperty('expenses')) {
+      this.calculateTotal();
     }
+  }
+
+  calculateTotal(): void {
+    this.results = [
+      {
+        name : 'Incomes',
+        value : this.incomes
+      },
+      {
+        name : 'Expenses',
+        value : this.expenses
+      }
+    ];
+    this.profit = this.incomes - this.expenses;
+  }
 }

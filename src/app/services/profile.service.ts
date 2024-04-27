@@ -34,4 +34,16 @@ export class ProfileService {
     });
     return this.http.get<number>("http://localhost:8080/api/customer/" + id + '/balance', { headers: headers });
   }
+  getInfoInJson(id: number): Observable<Blob> {
+    const token = "Bearer " + localStorage.getItem('accessToken')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    return this.http.get("http://localhost:8080/api/customer/downloadUserData/" + id, {
+      headers: headers,
+      responseType: 'blob'
+    });
+  }
+
 }
