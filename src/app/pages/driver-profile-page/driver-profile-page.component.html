@@ -11,6 +11,10 @@
             [ngClass]="{ 'active-button': activeButton === 'trips' }">
       Your trips
     </button>
+    <button class="button-styles" (click)="setActiveButton('car')"
+            [ngClass]="{ 'active-button': activeButton === 'car' }">
+      Your car
+    </button>
     <button class="button-styles" (click)="setActiveButton('rating')"
             [ngClass]="{ 'active-button': activeButton === 'rating' }">
       Your rating
@@ -72,6 +76,20 @@
           {{ review.comment }}
         </p>
       </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="activeButton === 'car'" class="car-container">
+    <div *ngIf="carIsRegistered">
+      <p>
+        Your car is registered
+      </p>
+    </div>
+    <div *ngIf="!carIsRegistered">
+      <input type="text" value="License plate:" [(ngModel)]="licensePlate">
+      <button (click)="registerCar()">
+        Register my car
+      </button>
     </div>
   </div>
 </div>

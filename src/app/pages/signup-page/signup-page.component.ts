@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {RegisterService} from "../../services/register.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -24,6 +24,9 @@ export class SignupPageComponent {
     name: new FormControl<string>('', [
       Validators.required
     ]),
+    surname: new FormControl<string>('', [
+      Validators.required
+    ]),
     email: new FormControl<string>('', [
       Validators.required
     ]),
@@ -34,17 +37,21 @@ export class SignupPageComponent {
       Validators.required
     ])
   })
+
   constructor(private regService: RegisterService, private router: Router) {
   }
-  regAsADriver(){
+
+  regAsADriver() {
     this.driver = !this.driver;
   }
-  sighUp(){
-    const [firstName, lastName] = this.form.value.name?.split(" ") || [];
-    if(this.driver){
+
+  sighUp() {
+    if (this.driver) {
       this.regService.register({
-        name: firstName,
-        surname: lastName,
+        // @ts-ignore
+        name: this.form.value.name,
+        // @ts-ignore
+        surname: this.form.value.surname,
         // @ts-ignore
         username: this.form.value.email,
         // @ts-ignore
@@ -64,11 +71,12 @@ export class SignupPageComponent {
           complete: () => {
           }
         });
-    }
-    else{
+    } else {
       this.regService.register({
-        name: firstName,
-        surname: lastName,
+        // @ts-ignore
+        name: this.form.value.name,
+        // @ts-ignore
+        surname: this.form.value.surname,
         // @ts-ignore
         username: this.form.value.email,
         // @ts-ignore

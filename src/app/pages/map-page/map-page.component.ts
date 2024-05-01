@@ -26,6 +26,7 @@ import {TripInfoService} from "../../services/trip-info.service";
 import {DriverProfileService} from "../../services/driver-profile.service";
 import {IDriverRating} from "../../models/driver-rating";
 import {ProfileService} from "../../services/profile.service";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Component({
   selector: 'app-map-page',
@@ -230,6 +231,7 @@ export class MapPageComponent implements OnInit {
           description: this.description,
           customerId: localStorage.getItem('userId')
         });
+
         this.getTripId();
 
         this.websocketService.subscribeForCancelling((response) => {
@@ -240,6 +242,7 @@ export class MapPageComponent implements OnInit {
         })
 
         this.searchingForDriver = true;
+        console.log('subscribe na: ' + localStorage.getItem('userId'))
         // @ts-ignore
         this.websocketService.subscribeForCustomer(localStorage.getItem('userId'), (response) => {
           const driverJson: any = JSON.parse(response.body);
@@ -269,7 +272,7 @@ export class MapPageComponent implements OnInit {
   getTripId() {
     this.websocketService.subscribeForDriver((response) => {
       const tripJson: any = JSON.parse(response.body);
-
+      console.log('trip prishla: ' + tripJson)
       this.tripId = tripJson.id;
     });
   }

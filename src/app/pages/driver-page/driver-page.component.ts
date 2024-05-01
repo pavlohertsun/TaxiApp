@@ -52,8 +52,9 @@ export class DriverPageComponent implements OnInit{
         const tripJson: any = JSON.parse(response.body);
 
         this.trip = tripJson;
-        this.trips.push(tripJson);
-        console.log("trips" + this.trips);
+        console.log('trip prishla: ' + this.trip.id)
+        this.trips.push(this.trip);
+        console.log("trips" + this.trips[0]);
       });
       this.websocketService.subscribeForCancelling((response) => {
             this.websocketService.disconnect();
@@ -76,7 +77,8 @@ export class DriverPageComponent implements OnInit{
   takeOrder(){
     // @ts-ignore
     const userIdNumber = parseInt(localStorage.getItem('userId'), 10);
-    console.log(userIdNumber);
+    console.log('sendind na: ' + this.trip.user.id);
+
     this.websocketService.applyTrip({
       id: this.tripId,
       startTime: this.trip.startTime,
@@ -89,6 +91,8 @@ export class DriverPageComponent implements OnInit{
       customerId: this.trip.user.id,
       driverId: userIdNumber
     }, this.trip.user.id);
+    // }, this.tripId);
+    console.log(this.tripId)
     this.getInfoAboutTrip();
   }
   getInfoAboutTrip(){
@@ -108,7 +112,13 @@ export class DriverPageComponent implements OnInit{
       });
   }
   handleIdClicked(id: number) {
+    console.log('clicked id: ' + id)
     this.tripId = id;
+    this.trips.forEach((trip: ITrip) => {
+      if (trip.id === id) {
+        this.trip = trip;
+      }
+    });
     this.takeOrder();
     this.foundTrip = true;
   }

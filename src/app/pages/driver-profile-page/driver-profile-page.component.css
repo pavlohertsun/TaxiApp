@@ -76,3 +76,19 @@
    margin-right: 5%;
  }
 
+.car-container{
+  margin-left: 5%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.car-container input{
+  width: 25%;
+  border: none;
+  padding: 10px 20px 10px 10px;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+}

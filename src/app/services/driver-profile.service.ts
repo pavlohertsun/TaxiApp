@@ -6,6 +6,7 @@ import {ICustomerTrip} from "../models/customer-trip";
 import {IDriver} from "../models/driver";
 import {IDriverProfileTrip} from "../models/driver-profile-trip";
 import {IDriverRating} from "../models/driver-rating";
+import {ICar} from "../models/car";
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,27 @@ export class DriverProfileService {
     return this.http.get("http://localhost:8080/api/driver/downloadUserData/" + id, {
       headers: headers,
       responseType: 'blob'
+    });
+  }
+
+  checkIfDriverHasCar(id: number){
+    const token = "Bearer " + localStorage.getItem('accessToken')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    return this.http.get<boolean>("http://localhost:8080/api/driver/car/" + id, {
+      headers: headers,
+    });
+  }
+  registerCar(car: ICar){
+    const token = "Bearer " + localStorage.getItem('accessToken')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    return this.http.post<any>("http://localhost:8080/api/driver/car", car,{
+      headers: headers,
     });
   }
 }
